@@ -2,6 +2,9 @@
 
 namespace KS;
 
+/**
+ * Inspired and code logic from https://github.com/dtinth/promptpay-qr
+ */
 class PromptPay {
 
   const ID_PAYLOAD_FORMAT = '00';
@@ -24,16 +27,43 @@ class PromptPay {
 
   public function generatePayload($target, $amount = null) {
 
+    $target = $this->sanitizeTarget($target);
+
     $targetType = strlen($target) >= 13 ? self::BOT_ID_MERCHANT_TAX_ID : self::BOT_ID_MERCHANT_PHONE_NUMBER;
+
+    $data = [
+      $this->f(self::ID_PAYLOAD_FORMAT, self::PAYLOAD_FORMAT_EMV_QRCPS_MERCHANT_PRESENTED_MODE),
+      $this->f(self::ID_POI_METHOD, $amount ? self::POI_METHOD_DYNAMIC : self::POI_METHOD_STATIC),
+      $this->f(self::ID_MERCHANT_INFORMATION_BOT, $this->serialize([
+          $this->f(self::MERCHANT_INFORMATION_TEMPLATE_ID_GUID, self::GUID_PROMPTPAY),
+          $this->f($targetType, $this->formatTarget($target))
+      ])),
+      $this->f(self::ID_COUNTRY_CODE, self::COUNTRY_CODE_TH),
+      $this->f(self::ID_TRANSACTION_CURRENCY, self::TRANSACTION_CURRENCY_THB),
+      $amount && $this->f(self::ID_TRANSACTION_AMOUNT, $this->formatAmount(amount))
+    ];
+    
+    $dataToCrc = $this->serialize($data) . self::ID_CRC . '04';
+    array_push($data, $this->f(self::ID_CRC, $this->crc16($dataToCrc)));
+    return $this->serialize($data);
   }
 
   public function f($id, $value) {
-    return implode('', [$id, substr('00' + strlen($value), -2), $value]);
+    return implode('', [$id, substr('00' . strlen($value), -2), $value]);
+  }
+  
+  public function serialize($xs) {
+    return implode('', $xs);
+  }
+  
+  public function sanitizeTarget($str) {
+    $str = preg_replace('/[^0-9]/', '', $str);
+    return $str;
   }
 
   public function formatTarget($target) {
-
-    $str = str_replace('-', '', $target);
+    
+    $str = $this->sanitizeTarget($target);
     $str = preg_replace('/^0/', '66', $str);
     $str = '0000000000000' . $str;
 

@@ -1,0 +1,15 @@
+<phpunit
+  colors="true"
+  bootstrap="vendor/autoload.php"
+>
+
+  <filter>
+    <whitelist
+      addUncoveredFilesFromWhitelist="true"
+      processUncoveredFilesFromWhitelist="true">
+
+      <directory suffix=".php">./src/</directory>
+    </whitelist>
+  </filter>
+
+</phpunit>

@@ -48,7 +48,7 @@ class PromptPay {
     $crc16 = new \mermshaus\CRC\CRC16CCITT();
     $crc16->update($data);
     $checksum = $crc16->finish();
-    return bin2hex($checksum);
+    return strtoupper(bin2hex($checksum));
   }
 
 }

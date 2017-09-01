@@ -55,6 +55,12 @@ class PromptPayTest extends PHPUnit_Framework_TestCase {
     $result = $this->PromptPay->crc16($data);
     $expected = '8956';
     $this->assertEquals($expected, $result);
+    
+    $data = '00020101021129370016A000000677010111011300668999999995802TH53037646304';
+    $result = $this->PromptPay->crc16($data);
+    $expected = 'FE29';
+    $this->assertEquals($expected, $result);
+    
   }
   
   public function testGeneratePayload() {

@@ -4,6 +4,7 @@ namespace KS;
 
 /**
  * Inspired and code logic from https://github.com/dtinth/promptpay-qr
+ * More information https://www.blognone.com/node/95133
  */
 class PromptPay {
 
@@ -40,8 +41,11 @@ class PromptPay {
       ])),
       $this->f(self::ID_COUNTRY_CODE, self::COUNTRY_CODE_TH),
       $this->f(self::ID_TRANSACTION_CURRENCY, self::TRANSACTION_CURRENCY_THB),
-      $amount && $this->f(self::ID_TRANSACTION_AMOUNT, $this->formatAmount(amount))
     ];
+    
+    if ($amount !== null) {
+      array_push($data, $this->f(self::ID_TRANSACTION_AMOUNT, $this->formatAmount($amount)));
+    }
     
     $dataToCrc = $this->serialize($data) . self::ID_CRC . '04';
     array_push($data, $this->f(self::ID_CRC, $this->crc16($dataToCrc)));

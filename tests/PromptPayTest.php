@@ -82,6 +82,19 @@ class PromptPayTest extends PHPUnit_Framework_TestCase {
     $result = $this->PromptPay->generatePayload($target);
     $expected = '00020101021129370016A000000677010111021312345678901235802TH53037646304EC40';
     $this->assertEquals($expected, $result);
+    
+    //with amount
+    $target = '089-123-4567';
+    $amount = '13371337.75';
+    $result = $this->PromptPay->generatePayload($target, $amount);
+    $expected = '00020101021229370016A000000677010111011300668912345675802TH5303764541113371337.756304B7D7';
+    $this->assertEquals($expected, $result);
+    
+    $target = '1234567890123';
+    $amount = '420';
+    $result = $this->PromptPay->generatePayload($target, $amount);
+    $expected = '00020101021229370016A000000677010111021312345678901235802TH53037645406420.006304BF7B';
+    $this->assertEquals($expected, $result);
   }
 
   public function testF() {

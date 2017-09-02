@@ -8,7 +8,7 @@ PHP Library to generate QR Code payload for PromptPay inspired from [dtinth/prom
 
 # Requirement
 - PHP 5.4+
-- [GD Extension](http://php.net/manual/en/book.image.php) (For Generate QrCode)
+- [GD Extension](http://php.net/manual/en/book.image.php) (For Generate QR Code)
 
 # Composer
 Install the latest version with composer [Packagist](https://packagist.org/packages/kittinan/php-promptpay-qr)
@@ -33,16 +33,16 @@ $amount = 420;
 echo $pp->generatePayload($target, $amount);
 //00020101021229370016A000000677010111011300668999999995802TH53037645406420.006304CF9E
 
-//Generate QrCode PNG file
+//Generate QR Code PNG file
 $target = '1-2345-67890-12-3';
 $savePath = '/tmp/qrcode.png';
 $pp->generateQrCode($savePath, $target);
 
-//Generate QrCode With Amount
+//Generate QR Code With Amount
 $amount = 420;
 $pp->generateQrCode($savePath, $target, $amount);
 
-//Set QrCode Size Pixel
+//Set QR Code Size Pixel
 $width = 1000;
 $pp->generateQrCode($savePath, $target, $amount, $width);
 ```

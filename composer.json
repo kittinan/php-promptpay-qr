@@ -4,12 +4,10 @@
   "description": "PHP Library to generate QR Code payload for PromptPay",
   "keywords": ["Promptpay"],
   "license": "MIT",
-  "prefer-stable": true,
-  "minimum-stability": "dev",
   "require": {
     "php": ">=5.4",
     "bacon/bacon-qr-code": "1.0.1",
-    "notrix/crc": "@dev"
+    "kittinan/php-crc": "1.0.0"
   },
   "require-dev": {
     "phpunit/phpunit": "4.8.12",

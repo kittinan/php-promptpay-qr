@@ -82,14 +82,14 @@ class PromptPayTest extends PHPUnit_Framework_TestCase {
     $result = $this->PromptPay->generatePayload($target);
     $expected = '00020101021129370016A000000677010111021312345678901235802TH53037646304EC40';
     $this->assertEquals($expected, $result);
-    
+
     //with amount
     $target = '089-123-4567';
     $amount = '13371337.75';
     $result = $this->PromptPay->generatePayload($target, $amount);
     $expected = '00020101021229370016A000000677010111011300668912345675802TH5303764541113371337.756304B7D7';
     $this->assertEquals($expected, $result);
-    
+
     $target = '1234567890123';
     $amount = '420';
     $result = $this->PromptPay->generatePayload($target, $amount);
@@ -104,6 +104,57 @@ class PromptPayTest extends PHPUnit_Framework_TestCase {
     $result = $this->PromptPay->f($id, $value);
     $expected = '000201';
     $this->assertEquals($expected, $result);
+    
+    $id = '05';
+    $value = '420';
+    $result = $this->PromptPay->f($id, $value);
+    $expected = '0503420';
+    $this->assertEquals($expected, $result);
+  }
+
+  public function testGeneratePngQrCode() {
+
+    $savePath = '/tmp/qr.png';
+    $target = '089-123-4567';
+    $amount = '420';
+    $this->PromptPay->generateQrCode($savePath, $target, $amount);
+    $this->assertGeneratePngQrCode($savePath, $target, $amount);
+
+    $target = '089-123-4567';
+    $amount = null;
+    $this->PromptPay->generateQrCode($savePath, $target, $amount);
+    $this->assertGeneratePngQrCode($savePath, $target, $amount);
+  }
+
+  private function assertGeneratePngQrCode($savePath, $target, $amount) {
+
+    $this->assertFileExists($savePath);
+    $expected_payload = $this->PromptPay->generatePayload($target, $amount);
+
+    //Use zxing.org to decode image
+    $request = curl_init('http://zxing.org/w/decode');
+
+    list($major, $minor) = explode('.', phpversion());
+
+    // send a file
+    curl_setopt($request, CURLOPT_POST, true);
+
+    if ($major == 5 && $minor < 5) {
+      $file_upload = '@' . $savePath;
+    } else {
+      $file_upload = new CurlFile($savePath, 'image/png');
+    }
+
+    curl_setopt($request, CURLOPT_POSTFIELDS, [
+      'f' => $file_upload
+    ]);
+
+    curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+    $body = curl_exec($request);
+    curl_close($request);
+    $this->assertContains($expected_payload, $body);
+
+    unlink($savePath);
   }
 
 }

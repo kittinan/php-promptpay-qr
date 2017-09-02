@@ -84,5 +84,17 @@ class PromptPay {
     $checksum = $crc16->finish();
     return strtoupper(bin2hex($checksum));
   }
+  
+  public function generateQrCode($savePath, $target, $amount = null, $width = 256, $height = 256) {
+
+    $payload = $this->generatePayload($target, $amount);
+
+    $renderer = new \BaconQrCode\Renderer\Image\Png();
+    $renderer->setHeight($width);
+    $renderer->setWidth($height);
+    $renderer->setMargin(0);
+    $writer = new \BaconQrCode\Writer($renderer);
+    $writer->writeFile($payload, $savePath);
+  }
 
 }

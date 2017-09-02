@@ -4,24 +4,11 @@
   "description": "PHP Library to generate QR Code payload for PromptPay",
   "keywords": ["Promptpay"],
   "license": "MIT",
-  "repositories": {
-    "mermshaus/php-crc": {
-      "type": "package",
-      "package": {
-        "name": "mermshaus/php-crc",
-        "version": "1.0",
-        "source": {
-          "url": "https://github.com/mermshaus/php-crc.git",
-          "type": "git",
-          "reference": "origin/master"
-        }
-      }
-    }
-  },
+  "minimum-stability": "dev",
   "require": {
     "php": ">=5.4",
     "bacon/bacon-qr-code": "1.0.1",
-    "mermshaus/php-crc": "1.0"
+    "notrix/crc": "@dev"
   },
   "require-dev": {
     "phpunit/phpunit": "4.8.12",

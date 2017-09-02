@@ -8,14 +8,14 @@
   "minimum-stability": "dev",
   "repositories": [
     {
-      "type": "git",
+      "type": "vcs",
       "url": "https://github.com/mermshaus/php-crc"
     }
   ],
   "require": {
     "php": ">=5.4",
     "bacon/bacon-qr-code": "1.0.1",
-    "mermshaus/crc": "dev-master"
+    "mermshaus/crc": "*@dev"
   },
   "require-dev": {
     "phpunit/phpunit": "4.8.12",

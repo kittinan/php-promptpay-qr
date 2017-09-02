@@ -4,6 +4,8 @@
   "description": "PHP Library to generate QR Code payload for PromptPay",
   "keywords": ["Promptpay"],
   "license": "MIT",
+  "prefer-stable": true,
+  "minimum-stability": "dev",
   "repositories": [
     {
       "type": "git",

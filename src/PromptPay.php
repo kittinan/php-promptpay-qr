@@ -68,6 +68,10 @@ class PromptPay {
   public function formatTarget($target) {
     
     $str = $this->sanitizeTarget($target);
+    if (strlen($str) >= 13) {
+      return $str;
+    }
+    
     $str = preg_replace('/^0/', '66', $str);
     $str = '0000000000000' . $str;
 

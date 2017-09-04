@@ -32,6 +32,12 @@ class PromptPayTest extends PHPUnit_Framework_TestCase {
     $result = $this->PromptPay->formatTarget($target);
     $expected = '1234567890123';
     $this->assertEquals($expected, $result);
+    
+    //Target Tax ID start with 0 (Coporate Tax ID)
+    $target = '0123456789012';
+    $result = $this->PromptPay->formatTarget($target);
+    $expected = '0123456789012';
+    $this->assertEquals($expected, $result);
   }
 
   public function testformatAmount() {

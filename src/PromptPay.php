@@ -22,6 +22,7 @@ class PromptPay {
   const MERCHANT_INFORMATION_TEMPLATE_ID_GUID = '00';
   const BOT_ID_MERCHANT_PHONE_NUMBER = '01';
   const BOT_ID_MERCHANT_TAX_ID = '02';
+  const BOT_ID_MERCHANT_EWALLET_ID = '03';
   const GUID_PROMPTPAY = 'A000000677010111';
   const TRANSACTION_CURRENCY_THB = '764';
   const COUNTRY_CODE_TH = 'TH';
@@ -30,7 +31,7 @@ class PromptPay {
 
     $target = $this->sanitizeTarget($target);
 
-    $targetType = strlen($target) >= 13 ? self::BOT_ID_MERCHANT_TAX_ID : self::BOT_ID_MERCHANT_PHONE_NUMBER;
+    $targetType = strlen($target) >= 15 ? self::BOT_ID_MERCHANT_EWALLET_ID : (strlen($target) >= 13 ? self::BOT_ID_MERCHANT_TAX_ID : self::BOT_ID_MERCHANT_PHONE_NUMBER);
 
     $data = [
       $this->f(self::ID_PAYLOAD_FORMAT, self::PAYLOAD_FORMAT_EMV_QRCPS_MERCHANT_PRESENTED_MODE),

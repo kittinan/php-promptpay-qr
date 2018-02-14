@@ -101,6 +101,33 @@ class PromptPayTest extends PHPUnit_Framework_TestCase {
     $result = $this->PromptPay->generatePayload($target, $amount);
     $expected = '00020101021229370016A000000677010111021312345678901235802TH53037645406420.006304BF7B';
     $this->assertEquals($expected, $result);
+
+    // e-Wallet ID
+    // K Plus ID
+    $target = '004999000288505';
+    $result = $this->PromptPay->generatePayload($target);
+    $expected = '00020101021129390016A00000067701011103150049990002885055802TH530376463041521';
+    $this->assertEquals($expected, $result);
+
+    // with amount
+    $target = '004999000288505';
+    $amount = '100.25';
+    $result = $this->PromptPay->generatePayload($target, $amount);
+    $expected = '00020101021229390016A00000067701011103150049990002885055802TH53037645406100.256304369A';
+    $this->assertEquals($expected, $result);
+
+    // K Plus Shop ID
+    $target = '004000006579718';
+    $result = $this->PromptPay->generatePayload($target);
+    $expected = '00020101021129390016A00000067701011103150040000065797185802TH53037646304FBB5';
+    $this->assertEquals($expected, $result);
+
+    // with amount
+    $target = '004000006579718';
+    $amount = '200.50';
+    $result = $this->PromptPay->generatePayload($target, $amount);
+    $expected = '00020101021229390016A00000067701011103150040000065797185802TH53037645406200.5063048A37';
+    $this->assertEquals($expected, $result);
   }
 
   public function testF() {

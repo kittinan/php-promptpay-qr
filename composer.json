@@ -6,7 +6,7 @@
   "license": "MIT",
   "require": {
     "php": ">=5.4",
-    "bacon/bacon-qr-code": "1.0.1",
+    "bacon/bacon-qr-code": "^1.0",
     "kittinan/php-crc": "1.0.0"
   },
   "require-dev": {
